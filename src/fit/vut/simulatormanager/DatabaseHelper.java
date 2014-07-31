@@ -34,7 +34,7 @@ public class DatabaseHelper {
 	public static Map<String, String> getSimulatorIdsNames() {
 		Map<String, String> simulatorIdsNames = new HashMap<>();
 		Connection connection = null;
-		String getDataString = "select \"SimulatorId\", \"SimulatorName\" from simulator";
+		String getDataString = "select SimulatorId, SimulatorName from simulator";
 		PreparedStatement getDataPs = null;
 
 		try {
@@ -44,8 +44,8 @@ public class DatabaseHelper {
 			getDataPs = connection.prepareStatement(getDataString);
 			ResultSet rs = getDataPs.executeQuery();
 			while (rs.next()) {
-				String simulatorId = rs.getString("SimulatorId");
-				String simulatorName = rs.getString("SimulatorName");
+				String simulatorId = rs.getString("simulatorid");
+				String simulatorName = rs.getString("simulatorname");
 				simulatorIdsNames.put(simulatorId, simulatorName);
 			}
 		} catch (SQLException e) {
@@ -77,7 +77,7 @@ public class DatabaseHelper {
 	public static String pauseStartSimulationRandomly(Integer simulationId) {
 		boolean nextState = getRandomBoolean();
 		Connection connection = null;
-		String updateDataString = "UPDATE Simulation SET \"IsSimulationOn\" = ? WHERE \"SimulationId\"=?;";
+		String updateDataString = "UPDATE Simulation SET isSimulationOn = ? WHERE SimulationId=?;";
 		PreparedStatement getDataPs = null;
 		try {
 			connection = DriverManager.getConnection(
@@ -112,7 +112,7 @@ public class DatabaseHelper {
 		lastTrimVal = lastTrimVal + getRandomDouble();
 
 		Connection connection = null;
-		String insertDataString = "insert into SimulationDevicesState (\"Simulation_SimulationId\", \"Elevator\", \"Eleron\", \"Rudder\", \"Throttle\", \"Flaps\", \"SpeedBrakes\", \"Trim\") VALUES (?,?,?,?,?,?,?,?)";
+		String insertDataString = "insert into SimulationDevicesState (Simulation_SimulationId, Elevator, Eleron, Rudder, Throttle, Flaps, SpeedBrakes, Trim) VALUES (?,?,?,?,?,?,?,?)";
 		PreparedStatement insertDataPs = null;
 		try {
 			connection = DriverManager.getConnection(
@@ -162,7 +162,7 @@ public class DatabaseHelper {
 		lastCompassVal = lastCompassVal + getRandomDouble();
 
 		Connection connection = null;
-		String insertDataString = "insert into SimulationPfdInfo (\"Simulation_SimulationId\", \"Roll\", \"Pitch\", \"Yaw\", \"IAS\", \"Altitude\", \"GroundAltitude\", \"VerticalSpeed\", \"Compass\") VALUES (?,?,?,?,?,?,?,?,?)";
+		String insertDataString = "insert into SimulationPfdInfo (Simulation_SimulationId, Roll, Pitch, Yaw, IAS, Altitude, GroundAltitude, VerticalSpeed, Compass) VALUES (?,?,?,?,?,?,?,?,?)";
 		PreparedStatement insertDataPs = null;
 		try {
 			connection = DriverManager.getConnection(
